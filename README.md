@@ -36,8 +36,22 @@ The following options can be configured:
 | `interval`  | Refresh interval, not including MQTT subscription deliveries. (default: `300000`)  |
 | `postText`  | Text to append after the data received from MQTT (default: `''`)  |
 
+## Known Limitations
+- Currently only supports unencrypted/unauthenticated MQTT connections.  
+
 ## Dependencies
 - [mqtt](https://www.npmjs.com/package/mqtt) (installed via `npm install`)
+
+## Contributing Guidelines
+
+Contributions of all kinds are welcome, not only in the form of code but also with regards bug reports and documentation.
+
+Please keep the following in mind:
+
+- **Bug Reports**:  Make sure you're running the latest version. If the issue(s) still persist: please open a clearly documented issue with a clear title. 
+- **Minor Bug Fixes**: Please send a pull request with a clear explanation of the issue or a link to the issue it solves.
+- **Major Bug Fixes**: please discuss your approach in an GitHub issue before you start to alter a big part of the code.
+- **New Features**: please please discuss in a GitHub issue before you start to alter a big part of the code. Without discussion upfront, the pull request will not be accepted / merged.
 
 The MIT License (MIT)
 =====================
