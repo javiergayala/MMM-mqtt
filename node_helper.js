@@ -25,10 +25,21 @@ module.exports = NodeHelper.create({
 
     client.on('error', function(error) {
       console.log('*** MQTT JS ERROR ***: ' + error);
+      self.sendSocketNotification('ERROR', {
+        type: 'notification',
+        title: 'MQTT Error',
+        message: 'The MQTT Client has suffered an error: ' + error
+      });
     });
 
     client.on('offline', function() {
       console.log('*** MQTT Client Offline ***');
+      self.sendSocketNotification('ERROR', {
+        type: 'notification',
+        title: 'MQTT Offline',
+        message: 'MQTT Server is offline.'
+      });
+      client.end();
     });
 
     client.on('message', function(topic, message) {

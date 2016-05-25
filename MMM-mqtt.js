@@ -59,6 +59,10 @@ Module.register('MMM-mqtt', {
       this.loaded = true;
       this.updateDom();
     }
+
+    if (notification === 'ERROR') {
+      this.sendNotification('SHOW_ALERT', payload);
+    }
   }
 
 });
