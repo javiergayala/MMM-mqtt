@@ -15,12 +15,12 @@ module.exports = NodeHelper.create({
     console.log('MMM-mqtt started ...');
   },
 
-  getMqtt: function(payload) {
+  getMqtt: function(config) {
     var self = this;
-    var client = mqtt.connect(payload.mqttServer);
+    var client = mqtt.connect(config.mqttServer);
 
     client.on('connect', function() {
-      client.subscribe(payload.topic);
+      client.subscribe(config.topic);
     });
 
     client.on('error', function(error) {
