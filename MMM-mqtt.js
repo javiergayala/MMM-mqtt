@@ -83,6 +83,7 @@ Module.register('MMM-mqtt', {
     }
 
     this.sendSocketNotification("MQTT_SEND", {
+      mqttServer: self.config.mqttServer,
       topic: topic,
       payload: payload
     });
