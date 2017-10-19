@@ -18,6 +18,9 @@ module.exports = NodeHelper.create({
   getMqtt: function(config) {
     var self = this;
     var client = mqtt.connect(config.mqttServer);
+    self.client = client;
+
+    console.log("Creating new MQTT client: ", config);
 
     client.on('connect', function() {
       client.subscribe(config.topic);
@@ -42,15 +45,21 @@ module.exports = NodeHelper.create({
       client.end();
     });
 
-    client.on('message', function(topic, message) {
-      self.sendSocketNotification('MQTT_DATA', {'topic':topic, 'data':message.toString()});
-      // client.end();
-    });
+    if(config.mode !== 'send') {
+      client.on('message', function(topic, message) {
+        self.sendSocketNotification('MQTT_DATA', {'topic':topic, 'data':message.toString()});
+        // client.end();
+      });
+    }
   },
 
   socketNotificationReceived: function(notification, payload) {
+    var self = this;
+
     if (notification === 'MQTT_SERVER') {
       this.getMqtt(payload);
+    } else if(notification == 'MQTT_SEND') {
+      self.client.publish(payload.topic, JSON.stringify(payload.payload));
     }
   }
 });
