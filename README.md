@@ -29,7 +29,7 @@ The following options can be configured:
 
 | Option  | Description  |
 |---|---|
-| `mqttServer`  | Connection string for the server to connect to (`mqtt://localhost`)  |
+| `mqttServer`  | Connection string for the server to connect to (e.g. `mqtt://localhost`) **See:** Server URL  |
 | `loadingText`  | Text to display while waiting for data to load  |
 | `topic`  | MQTT Topic to subscribe to on the server (`sensors/temperature/livingroom`)  |
 | `showTitle`  | Boolean to show/hide a title (default: `false`)  |
@@ -37,8 +37,17 @@ The following options can be configured:
 | `interval`  | Refresh interval, not including MQTT subscription deliveries. (default: `300000`)  |
 | `postText`  | Text to append after the data received from MQTT (default: `''`)  |
 
-## Known Limitations
-- Currently only supports unencrypted/unauthenticated MQTT connections.  
+## Server URL
+The server URL can be configured with all options supported by [URL.parse](https://nodejs.org/api/url.html#url_url_strings_and_url_objects). The format used is
+
+```
+   mqtt:    //    user   :   pass   @ some.host.com : 1883
+| protocol |  | username | password |   hostname    | port |
+```
+
+Supported protocols include:
+- mqtt
+- mqtts
 
 ## Dependencies
 - [mqtt](https://www.npmjs.com/package/mqtt) (installed via `npm install`)
@@ -49,7 +58,7 @@ Contributions of all kinds are welcome, not only in the form of code but also wi
 
 Please keep the following in mind:
 
-- **Bug Reports**:  Make sure you're running the latest version. If the issue(s) still persist: please open a clearly documented issue with a clear title. 
+- **Bug Reports**:  Make sure you're running the latest version. If the issue(s) still persist: please open a clearly documented issue with a clear title.
 - **Minor Bug Fixes**: Please send a pull request with a clear explanation of the issue or a link to the issue it solves.
 - **Major Bug Fixes**: please discuss your approach in an GitHub issue before you start to alter a big part of the code.
 - **New Features**: please please discuss in a GitHub issue before you start to alter a big part of the code. Without discussion upfront, the pull request will not be accepted / merged.
