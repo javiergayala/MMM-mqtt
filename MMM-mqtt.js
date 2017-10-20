@@ -12,6 +12,7 @@ Module.register('MMM-mqtt', {
 
   defaults: {
     mqttServer: 'mqtt://test.mosquitto.org',
+    mode: 'receive',
     loadingText: 'Loading MQTT Data...',
     topic: '',
     showTitle: false,
@@ -28,7 +29,7 @@ Module.register('MMM-mqtt', {
   },
 
   updateMqtt: function(self) {
-    self.sendSocketNotification('MQTT_SERVER', { mqttServer: self.config.mqttServer, topic: self.config.topic });
+    self.sendSocketNotification('MQTT_SERVER', { mqttServer: self.config.mqttServer, topic: self.config.topic, mode: self.config.mode });
     setTimeout(self.updateMqtt, self.config.interval, self);
   },
 
@@ -63,6 +64,29 @@ Module.register('MMM-mqtt', {
     if (notification === 'ERROR') {
       this.sendNotification('SHOW_ALERT', payload);
     }
+  },
+
+  notificationReceived: function(notification, payload, sender) {
+    var self = this;
+
+    if (self.config.mode !== "send") {
+      return;
+    }
+
+    var topic;
+    if (sender) {
+      Log.log(this.name + " received a module notification: " + notification + " from sender: " + sender.name + ": ", payload);
+      topic = this.config.topic + "/" + sender.name + "/" + notification;
+    } else {
+      Log.log(this.name + " received a system notification: " + notification + ": ", payload);
+      topic = this.config.topic + "/" + notification;
+    }
+
+    this.sendSocketNotification("MQTT_SEND", {
+      mqttServer: self.config.mqttServer,
+      topic: topic,
+      payload: payload
+    });
   }
 
 });
