@@ -36,6 +36,7 @@ The following options can be configured:
 | `title`  | Title to show if `showTitle` is `true`  |
 | `interval`  | Refresh interval, not including MQTT subscription deliveries. (default: `300000`)  |
 | `postText`  | Text to append after the data received from MQTT (default: `''`)  |
+| `mode` | Possible values: `send` or `receive` **default**
 
 ## Server URL
 The server URL can be configured with all options supported by [URL.parse](https://nodejs.org/api/url.html#url_url_strings_and_url_objects). The format used is
@@ -48,6 +49,22 @@ The server URL can be configured with all options supported by [URL.parse](https
 Supported protocols include:
 - mqtt
 - mqtts
+
+## Mode
+
+By default the module will receive MQTT messages from the configured topic and display these. MMM-mqtt can also be used to broadcast local MagicMirror² notifications from modules to an MQTT topic. A sending module doesn't have to be displayed. A sample minimal config for sending:
+
+```javascript
+{
+	module: "MMM-mqtt",
+	config: {
+		mqttServer: "mqtts://loclhost:8883",
+		topic: "home/living/magicmirror",
+		mode: "send"
+	}
+}
+```
+
 
 ## Dependencies
 - [mqtt](https://www.npmjs.com/package/mqtt) (installed via `npm install`)
