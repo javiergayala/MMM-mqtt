@@ -1,0 +1,9 @@
+.MMM-mqtt .title , .MMM-mqtt .loading {
+  font-size: 100%;
+}
+
+.MMM-mqtt .value {
+  font-size: 250%;
+  line-height: 100px;
+}
+

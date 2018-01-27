@@ -40,17 +40,20 @@ Module.register('MMM-mqtt', {
 
     if (!this.loaded) {
       wrapper.innerHTML = this.config.loadingText;
+      wrapper.className = "loading";
       return wrapper;
     }
 
     if (this.config.showTitle) {
       var titleDiv = document.createElement('div');
       titleDiv.innerHTML = this.config.title;
+      titleDiv.className = "title";
       wrapper.appendChild(titleDiv);
     }
 
     var mqttDiv = document.createElement('div');
     mqttDiv.innerHTML = this.roundValue(this.mqttVal.toString()) + this.config.postText;
+    mqttDiv.className = "value";
     wrapper.appendChild(mqttDiv);
 
     return wrapper;
@@ -97,5 +100,9 @@ Module.register('MMM-mqtt', {
     }
 
     return value;
-  }
+  },
+
+  getStyles: function() {
+    return ["MMM-mqtt.css"];
+  },
 });
