@@ -9,7 +9,7 @@ This is an extension for the [MagicMirror²](https://github.com/MichMich/MagicMi
 
 ## Using the module
 
-To use this module, add it to the modules array in the `config/config.js` file:
+To use this module, add this to the modules array in the `config/config.js` file:
 ````javascript
 modules: [
 	{
@@ -36,7 +36,9 @@ The following options can be configured:
 | `title`  | Title to show if `showTitle` is `true`  |
 | `interval`  | Refresh interval, not including MQTT subscription deliveries. (default: `300000`)  |
 | `postText`  | Text to append after the data received from MQTT (default: `''`)  |
-| `mode` | Possible values: `send` or `receive` **default**
+| `mode` | Possible values: `send` or `receive` (default: `receive`) |
+| `roundValue` | Rounds displayed value to specified decimals (default: `false`) |
+| `decimals` | number of decimals to round with `roundValue` (default: 2) 
 
 ## Server URL
 The server URL can be configured with all options supported by [URL.parse](https://nodejs.org/api/url.html#url_url_strings_and_url_objects). The format used is
@@ -58,7 +60,7 @@ By default the module will receive MQTT messages from the configured topic and d
 {
 	module: "MMM-mqtt",
 	config: {
-		mqttServer: "mqtts://loclhost:8883",
+		mqttServer: "mqtts://localhost:8883",
 		topic: "home/living/magicmirror",
 		mode: "send"
 	}

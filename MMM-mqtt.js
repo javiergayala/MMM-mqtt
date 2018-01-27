@@ -18,7 +18,9 @@ Module.register('MMM-mqtt', {
     showTitle: false,
     title: 'MQTT Data',
     interval: 300000,
-    postText: ''
+    postText: '',
+    roundValue: false,
+    decimals: 2
   },
 
   start: function() {
@@ -38,17 +40,20 @@ Module.register('MMM-mqtt', {
 
     if (!this.loaded) {
       wrapper.innerHTML = this.config.loadingText;
+      wrapper.className = "loading medium";
       return wrapper;
     }
 
     if (this.config.showTitle) {
       var titleDiv = document.createElement('div');
       titleDiv.innerHTML = this.config.title;
+      titleDiv.className = "title medium";
       wrapper.appendChild(titleDiv);
     }
 
     var mqttDiv = document.createElement('div');
-    mqttDiv.innerHTML = this.mqttVal.toString().concat(this.config.postText);
+    mqttDiv.innerHTML = this.roundValue(this.mqttVal.toString()) + this.config.postText;
+    mqttDiv.className = "value bright large light";
     wrapper.appendChild(mqttDiv);
 
     return wrapper;
@@ -87,6 +92,17 @@ Module.register('MMM-mqtt', {
       topic: topic,
       payload: payload
     });
-  }
+  },
 
+  roundValue: function(value) {
+    if (this.config.roundValue) {
+      value =  parseFloat(value).toFixed(this.config.decimals);
+    }
+
+    return value;
+  },
+
+  getStyles: function() {
+    return ["MMM-mqtt.css"];
+  },
 });
