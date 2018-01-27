@@ -1,5 +1,7 @@
+/* example of css to customize plugin look
+
 .MMM-mqtt .title , .MMM-mqtt .loading {
-  font-size: 100%;
+  font-size: 60%;
 }
 
 .MMM-mqtt .value {
@@ -7,3 +9,4 @@
   line-height: 100px;
 }
 
+*/

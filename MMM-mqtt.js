@@ -40,20 +40,20 @@ Module.register('MMM-mqtt', {
 
     if (!this.loaded) {
       wrapper.innerHTML = this.config.loadingText;
-      wrapper.className = "loading";
+      wrapper.className = "loading medium";
       return wrapper;
     }
 
     if (this.config.showTitle) {
       var titleDiv = document.createElement('div');
       titleDiv.innerHTML = this.config.title;
-      titleDiv.className = "title";
+      titleDiv.className = "title medium";
       wrapper.appendChild(titleDiv);
     }
 
     var mqttDiv = document.createElement('div');
     mqttDiv.innerHTML = this.roundValue(this.mqttVal.toString()) + this.config.postText;
-    mqttDiv.className = "value";
+    mqttDiv.className = "value bright large light";
     wrapper.appendChild(mqttDiv);
 
     return wrapper;
