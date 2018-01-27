@@ -18,7 +18,8 @@ Module.register('MMM-mqtt', {
     showTitle: false,
     title: 'MQTT Data',
     interval: 300000,
-    postText: ''
+    postText: '',
+    decimals: 2
   },
 
   start: function() {
@@ -48,7 +49,8 @@ Module.register('MMM-mqtt', {
     }
 
     var mqttDiv = document.createElement('div');
-    mqttDiv.innerHTML = this.mqttVal.toString().concat(this.config.postText);
+    //mqttDiv.innerHTML = this.mqttVal.toString().concat(this.config.postText);
+    mqttDiv.innerHTML = " " + this.roundValue(this.mqttVal.toString()) + this.config.postText;
     wrapper.appendChild(mqttDiv);
 
     return wrapper;
@@ -87,6 +89,10 @@ Module.register('MMM-mqtt', {
       topic: topic,
       payload: payload
     });
+  },
+
+  roundValue: function(value) {
+     return parseFloat(value).toFixed(this.config.decimals);
   }
 
 });
