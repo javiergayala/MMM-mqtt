@@ -26,7 +26,7 @@ module.exports = NodeHelper.create({
       self.clients[config.mqttServer] = client;
 
       client.on('error', function(error) {
-        console.log('*** MQTT JS ERROR ***: ' + error);
+        console.error('*** MQTT JS ERROR ***: ' + error);
         self.sendSocketNotification('ERROR', {
           type: 'notification',
           title: 'MQTT Error',
@@ -35,24 +35,37 @@ module.exports = NodeHelper.create({
       });
 
       client.on('offline', function() {
-        console.log('*** MQTT Client Offline ***');
+        console.error('*** MQTT Client Offline ***');
         self.sendSocketNotification('ERROR', {
           type: 'notification',
           title: 'MQTT Offline',
           message: 'MQTT Server is offline.'
         });
-        client.end();
+      });
+
+      client.on('connect', function(connack) {
+        console.log('MQTT Client connected to ' + config.mqttServer);
+
+        if(config.mode !== 'send') {
+          console.log('MQTT Client subscribing to ' + config.topic);
+
+          client.on('message', function(topic, message) {
+            self.sendSocketNotification('MQTT_DATA', {'topic':topic, 'data':message.toString()});
+          });
+          client.subscribe(config.topic);
+        }
+      });
+
+      client.on('reconnect', function(err) {
+        self.sendSocketNotification('ERROR', {
+          type: 'notification',
+          title: 'MQTT Reconnect',
+          message: 'MQTT reconnect.'
+        });
+        console.log(self.name + " reconnect:", err);
       });
     } else {
       client = self.clients[config.mqttServer];
-    }
-
-    if(config.mode !== 'send') {
-      client.subscribe(config.topic);
-
-      client.on('message', function(topic, message) {
-        self.sendSocketNotification('MQTT_DATA', {'topic':topic, 'data':message.toString()});
-      });
     }
   },
 
